@@ -49,6 +49,17 @@
                                 @else
                                     <p class="card-text">Tipo: Nessuna tipologia</p>
                                 @endif
+                                
+                                @if (count($project->technologies) > 0)
+                                    <p class="card-text">Tecnologia:</p>
+                                    <ul>
+                                        @foreach ($project->technologies as $technology)
+                                            <li>
+                                                <a href="{{ route('admin.projects.index') }}">{{ $technology->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                                 <p class="card-text">Nome Repo: {{ $project->name_repo }}</p>
                                 <p class="card-text">Link Repo: {{ $project->link_repo }}</p>
                                 <p class="card-text">Descrizione: {!! nl2br($project->description) !!}</p>
