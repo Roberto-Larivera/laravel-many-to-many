@@ -11,7 +11,6 @@
         aria-labelledby="exampleModalLabel{{ $technology->id }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                @if ($technology->projects()->count() == 0)
                 <div class="modal-header">
                     <h5 class="modal-title text-danger fs-2">Conferma Eliminazione</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -49,21 +48,6 @@
                         Conferma Eliminazione
                     </button>
                 </div>
-            @else
-                <div class="alert alert-danger mb-0">
-                    <h5>
-                        <i class="fa-solid fa-xmark"></i> Attenzione
-                    </h5>
-                    <p>
-                        Non puoi eliminare una tipologia che contiene uno o più progetti!
-                    </p>
-                    <div class="text-center">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-
-                    </div>
-                    
-                </div>
-                @endif
             </div>
         </div>
     </div>

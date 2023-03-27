@@ -45,7 +45,9 @@ class TypeController extends Controller
             $types = Type::all();
 
         if (count($types) == 0)
-            return view('admin.types.index', compact('types'))->with('warning', 'Non ci sono stati risultati');
+            // return view('admin.types.index', compact('types'))->with('warning', 'Non ci sono stati risultati');
+            
+            return redirect()->route('admin.types.index', compact('types'))->with('warning', 'Non ci sono stati risultati');
         else
             return view('admin.types.index', compact('types'));
     }

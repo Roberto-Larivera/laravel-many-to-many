@@ -27,9 +27,29 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        $technologies = Technology::all();
 
-        return view('admin.technologies.index', compact('technologies'));
+        $textSearch = request()->input('text');
+        $quantitySearch = request()->input('quantity');
+
+        if (isset($quantitySearch) <= 0)
+            $quantitySearch = null;
+
+        if (isset($textSearch) && !isset($quantitySearch))
+            $technologies = Technology::where('name', 'like', '%' . $textSearch . '%')->get();
+        elseif (!isset($textSearch) && isset($quantitySearch))
+            $technologies = Technology::has('projects', '>=', $quantitySearch)->get();
+        elseif (isset($textSearch) && isset($quantitySearch))
+            $technologies = Technology::where('name', 'like', '%' . $textSearch . '%')->has('projects', '>=', $quantitySearch)->get();
+        else
+            $technologies = Technology::all();
+
+            //dd(count($technologies) === 0);
+        if (count($technologies) === 0)
+            // return view('admin.technologies.index', compact('technologies'))->with('warning', 'Non ci sono stati risultati');
+            
+            return redirect()->route('admin.technologies.index', compact('technologies'))->with('warning', 'Non ci sono stati risultati');
+        else
+            return view('admin.technologies.index', compact('technologies'));
     }
 
     /**
@@ -84,7 +104,7 @@ class TechnologyController extends Controller
     public function show(Technology $technology)
     {
         $projects = $technology->projects;
-        return view('admin.technologies.show', compact('technology','projects'));
+        return view('admin.technologies.show', compact('technology', 'projects'));
     }
 
     /**
@@ -95,7 +115,7 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        
+
         return view('admin.technologies.edit', compact('technology'));
     }
 
@@ -134,7 +154,7 @@ class TechnologyController extends Controller
                 $existSlug = Technology::where('slug', $data['slug'])->first();
             }
             $technology->update($data);
-            return redirect()->route('admin.technologies.show', $technology)->with('success', 'Tipologia aggiornata con successo');
+            return redirect()->route('admin.technologies.show', $technology)->with('success', 'La Tecnologia aggiornata con successo');
         }
     }
 
@@ -146,6 +166,7 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        $technology->detach();
+        $technology->delete();
+        return redirect()->route('admin.technologies.index')->with('success', 'La Tecnologia è stato eliminato con successo');
     }
 }
