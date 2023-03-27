@@ -42,7 +42,9 @@ class ProjectController extends Controller
     {
         $textSearch = request()->input('text');
         $typeSearch = request()->input('type_id');
+        $technologySearch = request()->input('technology');
         $types = Type::all();
+        $technologies = Technology::all();
 
         if (isset($textSearch) && !isset($typeSearch))
             $projects = Project::where('title', 'like', '%' . $textSearch . '%')->get();
@@ -56,13 +58,21 @@ class ProjectController extends Controller
         else
             $projects = Project::all();
 
-        
+        if (isset($technologySearch))
+            $projects = Project::whereHas('technologies', function ($query) use ($technologySearch) {
+                $query->where('technologies.id', $technologySearch);
+            })->get();
+
         if (count($projects) == 0)
             // non va bene redirect perchè ci troviamo in index
-            // return redirect()->route('admin.projects.index', compact('projects', 'types'))->with('warning', 'Non ci sono stati risultati');
-            return view('admin.projects.index', compact('projects', 'types'))->with('warning', 'Non ci sono stati risultati');
+
+            // qui restituisci un view ma non viene letto il messaggio 'warning' in pagina
+            // return view('admin.projects.index', compact('projects', 'types', 'technologies'))->with('warning', 'Non ci sono stati risultati');
+
+            // qui restituisci una redirect alla rotta ma con il messaggio in pagina
+            return redirect()->route('admin.projects.index', compact('projects', 'types', 'technologies'))->with('warning', 'Non ci sono stati risultati');
         else
-            return view('admin.projects.index', compact('projects', 'types'));
+            return view('admin.projects.index', compact('projects', 'types', 'technologies'));
         // metodo 1
         // metodo 2
         //return view('admin.projects.index',compact('projects'));
@@ -86,7 +96,7 @@ class ProjectController extends Controller
     {
         $types = Type::all();
         $technologies = Technology::all();
-        return view('admin.projects.create', compact('types','technologies'));
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
 
@@ -137,12 +147,12 @@ class ProjectController extends Controller
 
         $newProject = Project::create($data);
 
-        if(array_key_exists('technologies',$data)){
+        if (array_key_exists('technologies', $data)) {
             foreach ($data['technologies'] as $tecnology) {
                 $newProject->technologies()->attach($tecnology);
             }
         }
-       
+
 
         // Email
         //Mail::to('prova-ricevere@esempio.it')->send(new NewProject($newProject));
@@ -186,7 +196,7 @@ class ProjectController extends Controller
     {
         $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types','technologies'));
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
 
@@ -215,16 +225,16 @@ class ProjectController extends Controller
         $featured_imageOld =  $project->featured_image;
         $descriptionOld =  $project->description;
         $technologiesOld =  $project->technologies()->pluck('id')->toArray();
-        
+
         $featuredDeleteImage = false;
-        
-        
+
+
         $data = $request->validated();
         //dd($technologiesOld == $data['technologies']);
 
-        if (array_key_exists('delete_featured_image', $data) || array_key_exists('featured_image', $data)) 
+        if (array_key_exists('delete_featured_image', $data) || array_key_exists('featured_image', $data))
             $featuredDeleteImage = true;
-        
+
         //
         if (!array_key_exists('type_id', $data))
             $data['type_id'] = null;
@@ -285,10 +295,9 @@ class ProjectController extends Controller
                 }
             }
 
-            if(array_key_exists('technologies',$data)){
-                
+            if (array_key_exists('technologies', $data)) {
+
                 $project->technologies()->sync($data['technologies']);
-                
             }
 
 

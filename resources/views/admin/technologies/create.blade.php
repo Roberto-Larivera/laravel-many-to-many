@@ -5,12 +5,12 @@
         <div class="row row-cols-1 mb-5">
             <div class="col">
                 <h1>
-                    Aggiungi Tipologia
+                    Aggiungi Tecnologia
                 </h1>
 
             </div>
             <div class="col">
-                <a href="{{ route('admin.types.index') }}" class="btn btn-outline-primary">
+                <a href="{{ route('admin.technologies.index') }}" class="btn btn-outline-primary">
                     Torna Indietro
                     <i class="fa-solid fa-rotate-left"></i>
                 </a>
@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col">
 
-                <form action="{{ route('admin.types.store') }}" method="POST">
+                <form action="{{ route('admin.technologies.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label  @error('name') text-danger @enderror ">Nome <span
