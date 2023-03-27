@@ -9,11 +9,11 @@
                 </h1>
             </div>
             <div class="col">
-                <a href="{{ route('admin.technology.index') }}" class="btn btn-outline-primary">
+                <a href="{{ route('admin.technologies.index') }}" class="btn btn-outline-primary">
                     Torna Indietro
                     <i class="fa-solid fa-rotate-left"></i>
                 </a>
-                <a href="{{ route('admin.technology.edit', $technology->id) }}" class="btn btn-outline-warning">
+                <a href="{{ route('admin.technologies.edit', $technology->id) }}" class="btn btn-outline-warning">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
                 {{-- @include('admin.projects.partials.delete') --}}
@@ -32,7 +32,7 @@
                             <div class="card-body h-100">
                                 <h5 class="card-title">Nome: {{ $technology->name }}</h5>
                                 <p class="card-text">Slug: {{ $technology->slug }}</p>
-                                {{-- <p class="card-text"># Progetti: {{ $technology->projects()->count() }}</p> --}}
+                                <p class="card-text"># Progetti: {{ count($projects) }}</p>
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        {{-- <div class="row">
+        <div class="row">
             @if (count($projects) > 0)
 
                 <div class="col-6">
@@ -62,6 +62,6 @@
                     </div>
                 </div>
             @endif
-        </div> --}}
+        </div>
     </div>
 @endsection

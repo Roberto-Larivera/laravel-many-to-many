@@ -1,17 +1,17 @@
-<form action="{{ route('admin.types.destroy', $type->id) }}" method="POST" class="d-inline">
+<form action="{{ route('admin.technologies.destroy', $technology->id) }}" method="POST" class="d-inline">
     @csrf
     @method('DELETE')
 
     <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
-        data-bs-target="#exampleModal{{ $type->id }}">
+        data-bs-target="#exampleModal{{ $technology->id }}">
         <i class="fa-solid fa-trash"></i>
     </button>
 
-    <div class="modal fade" id="exampleModal{{ $type->id }}" tabindex="-1"
-        aria-labelledby="exampleModalLabel{{ $type->id }}" aria-hidden="true">
+    <div class="modal fade" id="exampleModal{{ $technology->id }}" tabindex="-1"
+        aria-labelledby="exampleModalLabel{{ $technology->id }}" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                @if ($type->projects()->count() == 0)
+                @if ($technology->projects()->count() == 0)
                 <div class="modal-header">
                     <h5 class="modal-title text-danger fs-2">Conferma Eliminazione</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -23,16 +23,16 @@
                     <ul class="list-unstyled g-3">
 
                         <li>
-                            <span class="fw-bold">Id:</span> {{ $type->id }}
+                            <span class="fw-bold">Id:</span> {{ $technology->id }}
                         </li>
                         <li>
-                            <span class="fw-bold">Nome:</span> {{ $type->name }}
+                            <span class="fw-bold">Nome:</span> {{ $technology->name }}
                         </li>
                         <li>
-                            <span class="fw-bold">Slug:</span> {{ $type->slug }}
+                            <span class="fw-bold">Slug:</span> {{ $technology->slug }}
                         </li>
                         <li>
-                            <span class="fw-bold"># Progetti:</span> {{ $type->projects()->count() }}
+                            <span class="fw-bold"># Progetti:</span> {{ $technology->projects()->count() }}
                         </li>
                     </ul>
                     <div class="py-4">

@@ -83,8 +83,8 @@ class TechnologyController extends Controller
      */
     public function show(Technology $technology)
     {
-        
-        return view('admin.technologies.show', compact('technology'));
+        $projects = $technology->projects;
+        return view('admin.technologies.show', compact('technology','projects'));
     }
 
     /**
@@ -95,6 +95,7 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
+        
         return view('admin.technologies.edit', compact('technology'));
     }
 
@@ -107,7 +108,34 @@ class TechnologyController extends Controller
      */
     public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
-        //
+        $nameOld = $technology->name;
+
+        $data = $request->validated();
+
+        if ($nameOld == $data['name']) {
+            return redirect()->route('admin.technologies.edit', $technology->id)->with('warning', 'Non hai modificato nessun dato');
+        } else {
+
+            $data['slug'] = Str::slug($data['name']);
+
+            // Validazione slug
+            $existSlug = Technology::where('slug', $data['slug'])->first();
+
+            $counter = 1;
+            $dataSlug = $data['slug'];
+
+            // questa funzione controlla se lo slag esiste già nel database, e in caso esista con questo ciclo while li viene inserito un numero di continuazione 
+            while ($existSlug) {
+                if (strlen($data['slug']) >= 95) {
+                    substr($data['slug'], 0, strlen($data['slug']) - 3);
+                }
+                $data['slug'] = $dataSlug . '-' . $counter;
+                $counter++;
+                $existSlug = Technology::where('slug', $data['slug'])->first();
+            }
+            $technology->update($data);
+            return redirect()->route('admin.technologies.show', $technology)->with('success', 'Tipologia aggiornata con successo');
+        }
     }
 
     /**
@@ -118,6 +146,6 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->detach();
     }
 }

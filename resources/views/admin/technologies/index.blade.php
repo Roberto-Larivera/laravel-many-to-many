@@ -60,23 +60,23 @@
                             <th scope="col" class="text-info">#</th>
                             <th scope="col">ID</th>
                             <th scope="col">Nome</th>
-                            {{-- <th scope="col"># Progetti</th> --}}
+                            <th scope="col"># Progetti</th>
                             <th scope="col">Azioni</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($technologies as $index => $type)
+                        @foreach ($technologies as $index => $technology)
                             <tr>
                                 <th scope="row" class="text-info">{{ $index + 1 }}</th>
-                                <td>{{ $type->id }}</td>
-                                <td>{{ $type->name }}</td>
-                                {{-- <td>{{ $type->projects()->count() }}</td> --}}
+                                <td>{{ $technology->id }}</td>
+                                <td>{{ $technology->name }}</td>
+                                <td>{{ $technology->projects()->count() }}</td>
                                 <td>
-                                    <a href="{{ route('admin.technologies.show', $type->id) }}"
+                                    <a href="{{ route('admin.technologies.show', $technology->id) }}"
                                         class="btn btn-outline-primary">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.technologies.edit', $type->id) }}"
+                                    <a href="{{ route('admin.technologies.edit', $technology->id) }}"
                                         class="btn btn-outline-warning">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
