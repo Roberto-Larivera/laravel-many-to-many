@@ -33,7 +33,7 @@
                         </div>
                         @if (count($types) > 0)
                             <div class="col-auto d-flex ">
-    
+
                                 <div class="input-group">
                                     <label for="type_id"
                                         class="input-group-text bg-light  @error('type_id') text-danger @enderror">Tipologia</label>
@@ -49,7 +49,30 @@
                                         <p class="text-danger fw-bold">{{ $message }}</p>
                                     @enderror
                                 </div>
-    
+
+                            </div>
+                        @endif
+                        {{-- la ricerca tecnology non viene unita con gli altri parametri --}}
+                        @if (count($technologies) > 0)
+                            <div class="col-auto d-flex ">
+
+                                <div class="input-group">
+                                    <label for="technology"
+                                        class="input-group-text bg-light  @error('technology') text-danger @enderror">Tecnologia</label>
+                                    <select class="form-select @error('technology') is-invalid @enderror" name="technology">
+                                        <option value="">Nessuna Tecnologia</option>
+                                        @foreach ($technologies as $technology)
+                                            <option value="{{ $technology->id }}"
+                                                @if (request('technology')) {{ $technology->id  == request('technology') ? 'selected' : '' }} @endif
+                                                >
+                                                {{ $technology->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('technology')
+                                        <p class="text-danger fw-bold">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
                             </div>
                         @endif
                     </div>

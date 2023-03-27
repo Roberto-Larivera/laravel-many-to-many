@@ -55,7 +55,7 @@
                                     <ul>
                                         @foreach ($project->technologies as $technology)
                                             <li>
-                                                <a href="{{ route('admin.projects.index') }}">{{ $technology->name }}</a>
+                                                <a href="{{ route('admin.projects.index',['technology'=>$technology->id]) }}">{{ $technology->name }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
