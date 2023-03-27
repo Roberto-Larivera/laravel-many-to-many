@@ -97,6 +97,12 @@
                                         <i class="fa-solid fa-sitemap fa-lg fa-fw"></i> Tipologie
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white {{ Route::currentRouteName() == 'admin.technologies.index' ? 'active' : '' }}"
+                                        href="{{ route('admin.technologies.index') }}">
+                                        <i class="fa-solid fa-toolbox"></i> Tecnologie
+                                    </a>
+                                </li>
                             </ul>
                             <h6 class="text-white mt-4 mb-2">
                                 Gestione Profilo

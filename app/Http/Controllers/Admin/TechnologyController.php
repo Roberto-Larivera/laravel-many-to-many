@@ -1,10 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+
+use App\Http\Controllers\Controller;
+
+// Requests
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Requests\UpdateTechnologyRequest;
+
+// Helpers
+use Illuminate\Support\Str;
+
+// Models
 use App\Models\Technology;
+
+// Mails
+use App\Mail\NewType;
 
 class TechnologyController extends Controller
 {
@@ -15,7 +27,9 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies = Technology::all();
+
+        return view('admin.technologies.index', compact('technologies'));
     }
 
     /**
