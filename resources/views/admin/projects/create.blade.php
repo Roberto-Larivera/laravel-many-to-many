@@ -28,7 +28,7 @@
                         <label for="title" class="form-label  @error('title') text-danger @enderror ">Titolo <span
                                 class="text-danger fw-bold">*</span></label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
-                            name="title" placeholder="Example Title" maxlength="98" value="{{ old('title') }}" required>
+                            name="title" placeholder="Example Title" maxlength="98" value="{{ old('title') }}" >
                         @error('title')
                             <p class="text-danger fw-bold">{{ $message }}</p>
                         @enderror
@@ -62,14 +62,25 @@
                             <select class="form-select @error('type_id') is-invalid @enderror" name="type_id">
                                 <option value="">Nessuna Tipologia</option>
                                 @foreach ($types as $type)
-                                    <option value="{{ $type->id }}"
-                                        {{ old('type_id') == $type->id ? 'selected' : '' }}>
+                                    <option value="{{ $type->id }}" {{ old('type_id') == $type->id ? 'selected' : '' }}>
                                         {{ $type->name }}</option>
                                 @endforeach
                             </select>
                             @error('type_id')
                                 <p class="text-danger fw-bold">{{ $message }}</p>
                             @enderror
+                        </div>
+
+                    @endif
+                    @if (count($technologies) > 0)
+
+                        <div class="mb-3">
+                            @foreach ($technologies as $technology)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="tech-{{ $technology->id }}" name="technologies[]" value="{{ $technology->id }}">
+                                    <label class="form-check-label" for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
+                                </div>
+                            @endforeach
                         </div>
 
                     @endif

@@ -23,7 +23,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this);
+         //dd($this);
         return [
 
             'title' => 'required|max:98',
@@ -32,6 +32,7 @@ class StoreProjectRequest extends FormRequest
             'link_repo' => 'required|max:255',
             'description' => 'nullable|max:4096',
             'featured_image' => 'nullable|image|max:2048',
+            'technologies' => 'nullable|array|exists:technologies,id',
             
             // validazione img
             // image|max:2048

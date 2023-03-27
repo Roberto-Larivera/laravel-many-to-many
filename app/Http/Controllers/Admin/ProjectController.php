@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateProjectRequest;
 // Models
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 
 // Helpers
 use Illuminate\Support\Str;
@@ -84,7 +85,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types','technologies'));
     }
 
 
@@ -107,7 +109,7 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $data = $request->validated();
-
+        // dd($data);
         if (array_key_exists('featured_image', $data)) {
             $imgPath = Storage::put('projects', $data['featured_image']);
             $data['featured_image'] = $imgPath;
@@ -135,8 +137,15 @@ class ProjectController extends Controller
 
         $newProject = Project::create($data);
 
+        if(array_key_exists('technologies',$data)){
+            foreach ($data['technologies'] as $tecnology) {
+                $newProject->technologies()->attach($tecnology);
+            }
+        }
+       
+
         // Email
-        Mail::to('prova-ricevere@esempio.it')->send(new NewProject($newProject));
+        //Mail::to('prova-ricevere@esempio.it')->send(new NewProject($newProject));
         return redirect()->route('admin.projects.show', $newProject)->with('success', 'Progetto aggiunto con successo');
     }
 
