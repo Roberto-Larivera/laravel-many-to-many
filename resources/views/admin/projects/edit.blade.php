@@ -77,7 +77,40 @@
                             @enderror
                         </div>
 
+                    @endif 
+
+                    @if (count($technologies) > 0)
+
+                        <div class="mb-3">
+                            <label class="form-check-label d-block mb-2 @error('technologies') text-danger @enderror">
+                                Tecnologie
+                            </label>
+                            @foreach ($technologies as $technology)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input  @error('technologies') is-invalid @enderror"
+                                        type="checkbox" id="tech-{{ $technology->id }}" name="technologies[]"
+                                        value="{{ $technology->id }}" 
+                                        
+                                        @if (old('technologies') && is_array(old('technologies')) && count(old('technologies')) > 0) 
+                                        {{ in_array($technology->id,old('technologies',[])) ? 'checked': '' }}
+                                        @elseif($project->technologies->contains($technology->id))
+                                        checked
+                                        @endif
+
+                                        
+                                        >
+
+                                    <label class="form-check-label @error('technologies') text-danger @enderror"
+                                        for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
+                                </div>
+                            @endforeach
+                            @error('technologies')
+                                <p class="text-danger fw-bold">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                     @endif
+
                     <div class="mb-3">
                         <label for="featured_image"
                             class="form-label  @error('featured_image') text-danger @enderror">Featured Image</label>
