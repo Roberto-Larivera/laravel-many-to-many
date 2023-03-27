@@ -220,7 +220,7 @@ class ProjectController extends Controller
         
         
         $data = $request->validated();
-        dd($technologiesOld == $data['technologies']);
+        //dd($technologiesOld == $data['technologies']);
 
         if (array_key_exists('delete_featured_image', $data) || array_key_exists('featured_image', $data)) 
             $featuredDeleteImage = true;
@@ -230,13 +230,18 @@ class ProjectController extends Controller
             $data['type_id'] = null;
 
         //
+        if (!array_key_exists('technologies', $data))
+            $data['technologies'] = null;
+
+        //
         if (
             $titleOld ==  $data['title'] &&
             $type_idOld  ==  $data['type_id'] &&
             $name_repoOld ==  $data['name_repo'] &&
             $link_repoOld ==  $data['link_repo'] &&
             $descriptionOld ==  $data['description'] &&
-            $featuredDeleteImage == false
+            $featuredDeleteImage == false &&
+            $technologiesOld == $data['technologies']
         ) {
             return redirect()->route('admin.projects.edit', $project->id)->with('warning', 'Non hai modificato nessun dato');
         } else {
@@ -278,6 +283,12 @@ class ProjectController extends Controller
                     // Controllo se ce un immagine vecchia è la cancello
                     Storage::delete($featured_imageOld);
                 }
+            }
+
+            if(array_key_exists('technologies',$data)){
+                
+                $project->technologies()->sync($data['technologies']);
+                
             }
 
 

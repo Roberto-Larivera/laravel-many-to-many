@@ -34,7 +34,7 @@
                                 class="text-danger fw-bold">*</span></label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
                             name="title" placeholder="Example Title" maxlength="98"
-                            value="{{ old('title') ?? $project->title }}" >
+                            value="{{ old('title') ?? $project->title }}" required >
                         @error('title')
                             <p class="text-danger fw-bold">{{ $message }}</p>
                         @enderror
