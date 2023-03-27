@@ -214,18 +214,22 @@ class ProjectController extends Controller
         $link_repoOld =  $project->link_repo;
         $featured_imageOld =  $project->featured_image;
         $descriptionOld =  $project->description;
+        $technologiesOld =  $project->technologies()->pluck('id')->toArray();
+        
         $featuredDeleteImage = false;
-
+        
+        
         $data = $request->validated();
+        dd($technologiesOld == $data['technologies']);
 
-        if (array_key_exists('delete_featured_image', $data) || array_key_exists('featured_image', $data)) {
+        if (array_key_exists('delete_featured_image', $data) || array_key_exists('featured_image', $data)) 
             $featuredDeleteImage = true;
-        }
-
+        
+        //
         if (!array_key_exists('type_id', $data))
             $data['type_id'] = null;
 
-
+        //
         if (
             $titleOld ==  $data['title'] &&
             $type_idOld  ==  $data['type_id'] &&
