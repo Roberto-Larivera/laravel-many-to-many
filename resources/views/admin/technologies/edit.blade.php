@@ -1,22 +1,22 @@
 @extends('layouts.admin')
-@section('head-title', 'Create | ')
+@section('head-title', 'Edit | ')
 @section('content')
     <div class="container-fluid mt-4">
         <div class="row row-cols-1 mb-5">
             <div class="col">
                 <h1>
-                    Modifica Tipologia | {{ $type->id }}
+                    Modifica Tecnologia | {{ $technology->id }}
                 </h1>
             </div>
             <div class="col">
-                <a href="{{ route('admin.types.index') }}" class="btn btn-outline-primary">
+                <a href="{{ route('admin.technologies.index') }}" class="btn btn-outline-primary">
                     Torna Indietro
                     <i class="fa-solid fa-rotate-left"></i>
                 </a>
-                <a href="{{ route('admin.types.show', $type->id) }}" class="btn btn-outline-primary">
+                <a href="{{ route('admin.technologies.show', $technology->id) }}" class="btn btn-outline-primary">
                     <i class="fa-solid fa-eye"></i>
                 </a>
-                @include('admin.types.partials.delete')
+                {{-- @include('admin.technologies.partials.delete') --}}
             </div>
         </div>
         @include('admin.partials.errors')
@@ -25,14 +25,14 @@
         <div class="row">
             <div class="col">
 
-                <form action="{{ route('admin.types.update',$type) }}" method="POST">
+                <form action="{{ route('admin.technologies.update',$technology) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
                         <label for="name" class="form-label  @error('name') text-danger @enderror ">Nome <span
                                 class="text-danger fw-bold">*</span></label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                            name="name" placeholder="Esempio Tipologia" maxlength="98" value="{{ old('name',$type->name) }}" required>
+                            name="name" placeholder="Esempio Tipologia" maxlength="98" value="{{ old('name',$technology->name) }}" required>
                         @error('name')
                             <p class="text-danger fw-bold">{{ $message }}</p>
                         @enderror
