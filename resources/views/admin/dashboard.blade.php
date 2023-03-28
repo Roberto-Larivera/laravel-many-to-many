@@ -21,7 +21,10 @@
         </div>
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Users</div>
+                
+                <div class="card-header">Users 
+                    {{-- <i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s;" ></i> --}}
+                </div>
                 <div class="card-body">
                     <ul class="list-group">
                         <li class="list-group-item {{ $countUsers >0 ? 'list-group-item-success' : 'list-group-item-danger' }} ">

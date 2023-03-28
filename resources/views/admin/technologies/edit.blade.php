@@ -16,7 +16,7 @@
                 <a href="{{ route('admin.technologies.show', $technology->id) }}" class="btn btn-outline-primary">
                     <i class="fa-solid fa-eye"></i>
                 </a>
-                {{-- @include('admin.technologies.partials.delete') --}}
+                @include('admin.technologies.partials.delete')
             </div>
         </div>
         @include('admin.partials.errors')

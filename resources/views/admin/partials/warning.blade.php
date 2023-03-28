@@ -4,7 +4,7 @@
     <div class="col">
         <div class="alert alert-warning">
             <h5>
-                <i class="fa-solid fa-triangle-exclamation"></i> Attenzione
+                <i class="fa-solid fa-triangle-exclamation fa-fade"></i> Attenzione
             </h5>
             <p class="m-0">
                 {{ session('warning') }}
